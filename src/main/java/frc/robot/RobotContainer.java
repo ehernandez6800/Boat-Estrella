@@ -1,13 +1,12 @@
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Command.TeleopDrivetrain;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,14 +19,7 @@ public class RobotContainer {
     private final XboxController driver = new XboxController(Constants.driverID);
     private final XboxController operator = new XboxController(Constants.operatorID);
 
-    private CANSparkMax frontRightMotor =
-        new CANSparkMax(Constants.Motors.frontRightMotor, MotorType.kBrushless);
-    private CANSparkMax frontLeftMotor =
-        new CANSparkMax(Constants.Motors.frontLeftMotor, MotorType.kBrushless);
-    private CANSparkMax backRightMotor =
-        new CANSparkMax(Constants.Motors.backRightMotor, MotorType.kBrushless);
-    private CANSparkMax backLeftMotor =
-        new CANSparkMax(Constants.Motors.backLeftMotor, MotorType.kBrushless);
+
 
     // Initialize AutoChooser Sendable
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -47,6 +39,8 @@ public class RobotContainer {
         autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
         // Configure the button bindings
         configureButtonBindings();
+        // Note: Look into...
+        drivetrain.setDefaultCommand(new TeleopDrivetrain(drivetrain, driver))
     }
 
     /**
